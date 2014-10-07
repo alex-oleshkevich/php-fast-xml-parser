@@ -32,14 +32,17 @@ $parser = new Parser($handler);
 // define tags which you don't want to include in resulting array (optional)
 $parser->setSkipTags(['root']);
 
-// define end tag for every item (this is used as marker to determine when XML item was processed.
+// define end tag for every item
+// (this is used as marker to determine when XML
+// item was processed.
 // For example, if you want to extract "value" from this XML source
 //<root>
 //    <value>VALUE</value>
 //    <value>VALUE</value>
 //    <value>VALUE</value>
 //</root>
-// you must call $parser->setEndTag('value') so library can emit content of evety <value /> tag in "onItemParsed" event.
+// you must call $parser->setEndTag('value') so library can
+// emit content of evety <value /> tag in "onItemParsed" event.
 $parser->setEndTag('value');
 
 // run
