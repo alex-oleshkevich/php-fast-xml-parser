@@ -9,8 +9,6 @@ Key features:
   - Good for memory critical projects (~10Mb in average while parsing 500mb XML file)
   
 ![Build Status](https://travis-ci.org/alex-oleshkevich/php-fast-xml-parser.svg)
-[![Latest Stable Version](https://poser.pugx.org/alex-oleshkevich/php-fast-xml-parser/v/stable.svg)](https://packagist.org/packages/alex-oleshkevich/php-fast-xml-parser) [![Total Downloads](https://poser.pugx.org/alex-oleshkevich/php-fast-xml-parser/downloads.svg)](https://packagist.org/packages/alex-oleshkevich/php-fast-xml-parser) [![Latest Unstable Version](https://poser.pugx.org/alex-oleshkevich/php-fast-xml-parser/v/unstable.svg)](https://packagist.org/packages/alex-oleshkevich/php-fast-xml-parser) [![License](https://poser.pugx.org/alex-oleshkevich/php-fast-xml-parser/license.svg)](https://packagist.org/packages/alex-oleshkevich/php-fast-xml-parser)
-![Deps. Status](https://www.versioneye.com/user/projects/54d47c133ca08495310002b0/badge.svg?style=flat)
 
 Example & Tutorial
 --------------
