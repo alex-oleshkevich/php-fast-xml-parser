@@ -11,8 +11,8 @@
          verbose="true">
 
     <testsuites>
-        <testsuite name="Tests">
-            <directory>Tests</directory>
+        <testsuite name="FastXmlTest">
+            <directory>FastXmlTest</directory>
         </testsuite>
     </testsuites>
 </phpunit>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <content>
+        <value>VALUE 1</value>
+        <invalid>INVALID VALUE 1</invalid>
+    </content>
+    <content>
+        <value>VALUE 2</value>
+        <invalid>INVALID VALUE 2</invalid>
+    </content>
+    <content>
+        <value>VALUE 3</value>
+        <invalid>INVALID VALUE 3</invalid>
+    </content>
+</root>

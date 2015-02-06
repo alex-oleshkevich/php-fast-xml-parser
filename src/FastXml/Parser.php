@@ -5,14 +5,9 @@ namespace FastXml;
 use Exception;
 use FastXml\CallbackHandler\CallbackHandlerInterface;
 use FastXml\CallbackHandler\GenericHandler;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 
-class Parser extends EventDispatcher
+class Parser
 {
-    const EVENT_PRODUCT_PARSED = 'feedparser.product_parsed';
-    const EVENT_PROGRESS = 'feedparser.progress';
-    const END_TAG = 'product';
-
     /**
      * XML parser resource.
      * @var resource
@@ -34,7 +29,7 @@ class Parser extends EventDispatcher
      * Tags to exclude from result
      * @var array
      */
-    protected $skipTags = array();
+    protected $ignoreTags = array();
 
     /**
      * Endpoint of XML item.
@@ -46,6 +41,13 @@ class Parser extends EventDispatcher
      * @var CallbackHandlerInterface
      */
     protected $callbackHandler;
+    
+    /**
+     * Defines how much bytes to read from file per iteration.
+     * 
+     * @var int
+     */
+    protected $readBuffer = 8192;
 
     /**
      * Constructor.
@@ -62,19 +64,68 @@ class Parser extends EventDispatcher
         xml_set_object($this->parser, $this);
         xml_set_element_handler($this->parser, 'startTag', 'endTag');
         xml_set_character_data_handler($this->parser, 'tagData');
+        xml_set_external_entity_ref_handler($this->parser, 'convertEntities');
+    }
+    
+    /**
+     * Set option to XML parser.
+     * 
+     * @param int $name
+     * @param mixed $value
+     * @see XML_OPTION_* constants
+     * @link http://php.net/manual/en/function.xml-parser-set-option.php
+     * @return Parser
+     */
+    public function setOption($name, $value)
+    {
+        xml_parser_set_option($this->parser, $name, $value);
+        return $this;
+    }
+    
+    /**
+     * Get option from XML parser.
+     * 
+     * @param int $name
+     * @see XML_OPTION_* constants
+     * @link http://php.net/manual/en/function.xml-parser-set-option.php
+     * @return mixed
+     */
+    public function getParserOption($name)
+    {
+        return xml_parser_get_option($this->parser, $name);
+    }
+    
+    /**
+     * @return int
+     */
+    public function getReadBuffer()
+    {
+        return $this->readBuffer;
+    }
+
+    /**
+     * @param int $readBuffer
+     * @return Parser
+     */
+    public function setReadBuffer($readBuffer)
+    {
+        $this->readBuffer = $readBuffer;
+        return $this;
     }
 
     /**
      * Do not include these tags into result.
+     * 
      * @param array $tags
      */
-    public function setSkipTags(array $tags)
+    public function setIgnoreTags(array $tags)
     {
-        $this->skipTags = $tags;
+        $this->ignoreTags = $tags;
     }
 
     /**
      * Sets end tag.
+     * 
      * End tag is a tag which is used to determine separate blocks.
      * @param string $tag
      */
@@ -85,13 +136,15 @@ class Parser extends EventDispatcher
 
     /**
      * Handles start tag.
+     * 
      * @param resource $parser
      * @param string $name
      * @return null
      */
     public function startTag($parser, $name)
     {
-        if (in_array($name, $this->skipTags)) {
+        if (in_array($name, $this->ignoreTags)) {
+            $this->currentTag = null;
             return;
         }
         $this->currentTag = $name;
@@ -99,19 +152,23 @@ class Parser extends EventDispatcher
 
     /**
      * Handles tag content.
+     * 
      * @param resource $parser
      * @param string $data
      */
     public function tagData($parser, $data)
     {
         if ($this->currentTag) {
-            $this->currentData[$this->currentTag] = trim($data);
-            $this->currentTag = null;
+            if (!isset($this->currentData[$this->currentTag])) {
+                $this->currentData[$this->currentTag] = '';
+            }
+            $this->currentData[$this->currentTag] .= trim($data);
         }
     }
 
     /**
      * Handles close tag.
+     * 
      * @param resource $parser
      * @param string $name
      */
@@ -119,11 +176,30 @@ class Parser extends EventDispatcher
     {
         if ($name == $this->endTag) {
             $this->callbackHandler->onItemParsed($this->currentData);
+            $this->currentData = array();
         }
+    }
+    
+    /**
+     * Replaces all html entities into its original symbols.
+     * 
+     * @param string $content
+     * @return string
+     */
+    public function convertEntities($content)
+    {
+        $table = array_map('utf8_encode', array_flip(
+            array_diff(
+                get_html_translation_table(HTML_ENTITIES), 
+                get_html_translation_table(HTML_SPECIALCHARS)
+            )
+        ));
+        return preg_replace('/&#[\d\w]+;/', '', strtr($content, $table));
     }
 
     /**
      * Do parsing.
+     * 
      * @throws Exception
      */
     public function parse($file)
@@ -134,7 +210,7 @@ class Parser extends EventDispatcher
         }
 
         while (!feof($handle)) {
-            $data = fread($handle, 8192);
+            $data = fread($handle, $this->readBuffer);
             xml_parse($this->parser, $data, feof($handle));
             $this->callbackHandler->onProgress(ftell($handle), filesize($file));
         }

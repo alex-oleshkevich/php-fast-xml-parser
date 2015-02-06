@@ -2,7 +2,8 @@
     "name": "alex.oleshkevich/fast-xml-parser",
    "autoload": {
         "psr-0": {
-            "FastXml": "src"
+            "FastXml": "src",
+            "FastXmlTest": "tests"
         }
     }
 }

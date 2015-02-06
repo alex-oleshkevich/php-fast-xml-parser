@@ -6,7 +6,7 @@ Key features:
 
   - Lightweight;
   - Flexible (result can be easily managed via callback handlers);
-  - Good for memory critical projects (~10Mb in average  while parsing 500mb XML file)
+  - Good for memory critical projects (~10Mb in average while parsing 500mb XML file)
 
 Example & Tutorial
 --------------
@@ -30,7 +30,7 @@ $handler->setOnProgressCallback(function ($bytesProcessed, $bytesTotal) use ($se
 $parser = new Parser($handler);
 
 // define tags which you don't want to include in resulting array (optional)
-$parser->setSkipTags(['root']);
+$parser->setIgnoreTags(['root']);
 
 // define end tag for every item
 // (this is used as marker to determine when XML
