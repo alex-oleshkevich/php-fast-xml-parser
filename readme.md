@@ -44,7 +44,7 @@ $parser->setIgnoreTags(['root']);
 //    <value>VALUE</value>
 //</root>
 // you must call $parser->setEndTag('value') so library can
-// emit content of evety <value /> tag in "onItemParsed" event.
+// emit content of every <value /> tag in "onItemParsed" event.
 $parser->setEndTag('value');
 
 // run
