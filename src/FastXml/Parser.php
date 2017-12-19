@@ -18,7 +18,7 @@ class Parser
      * Currently aggregated data.
      * @var array
      */
-    protected $currentData = array();
+    protected $currentData = [];
 
     /**
      * @var string
@@ -29,7 +29,7 @@ class Parser
      * Tags to exclude from result
      * @var array
      */
-    protected $ignoreTags = array();
+    protected $ignoreTags = [];
 
     /**
      * Endpoint of XML item.
@@ -176,7 +176,7 @@ class Parser
     {
         if ($name == $this->endTag) {
             $this->callbackHandler->onItemParsed($this->currentData);
-            $this->currentData = array();
+            $this->currentData = [];
         }
     }
     

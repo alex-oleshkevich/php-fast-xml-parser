@@ -2,7 +2,10 @@
    "name": "alex.oleshkevich/fast-xml-parser",
    "description": "Fast SAX XML parser for PHP",
     "require": {
-        "php": ">=5.4.0"
+        "php": ">=5.6.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
     },
    "autoload": {
         "psr-0": {

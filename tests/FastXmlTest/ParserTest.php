@@ -4,9 +4,8 @@ namespace FastXmlTest;
 
 use FastXml\CallbackHandler\GenericHandler;
 use FastXml\Parser;
-use PHPUnit_Framework_TestCase;
 
-class ParserTest extends PHPUnit_Framework_TestCase
+class ParserTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testParser()
@@ -54,7 +53,7 @@ class ParserTest extends PHPUnit_Framework_TestCase
         $self = $this;
         $handler = new GenericHandler;
         $handler->setOnProgressCallback(function ($bytesProcessed, $bytesTotal) use ($self) {
-            $this->assertContains($bytesProcessed, array(100, 200, 300, 363));
+            $this->assertContains($bytesProcessed, [100, 200, 300, 363]);
         });
         $parser = new Parser($handler);
         $parser->setReadBuffer(100);

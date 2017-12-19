@@ -1,8 +1,9 @@
 language: php
 php:
+  - "7.2"
+  - "7.1"
+  - "7.0"
   - "5.6"
-  - "5.5"
-  - "5.4"
   
 before_install:
  - curl -sS https://getcomposer.org/installer | php
@@ -12,4 +13,4 @@ before_script:
 
 script:
  - (cd tests ; phpunit)
- 
+
