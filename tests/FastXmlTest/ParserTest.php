@@ -4,9 +4,9 @@ namespace FastXmlTest;
 
 use FastXml\CallbackHandler\GenericHandler;
 use FastXml\Parser;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ParserTest extends PHPUnit_Framework_TestCase
+class ParserTest extends TestCase
 {
 
     public function testParser()
