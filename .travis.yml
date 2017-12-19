@@ -11,8 +11,9 @@ before_install:
  - curl -sS https://getcomposer.org/installer | php
 
 before_script:
+ - php composer.phar install --dev
  - php composer.phar dump
 
 script:
- - (cd tests ; phpunit)
+ - (phpunit)
  
