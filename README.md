@@ -8,7 +8,7 @@ Key features:
   - Flexible (result can be easily managed via callback handlers);
   - Good for memory critical projects (~10Mb in average while parsing 500mb XML file)
   
-![Build Status](https://travis-ci.org/alex-oleshkevich/php-fast-xml-parser.svg)
+[![Build Status](https://travis-ci.org/alex-oleshkevich/php-fast-xml-parser.svg)](https://travis-ci.org/alex-oleshkevich/php-fast-xml-parser)
 
 Example & Tutorial
 --------------
