@@ -188,7 +188,7 @@ class Parser
      */
     public function convertEntities($content)
     {
-        $table = array_map('utf8_encode', array_flip(
+        $table = array_map(function($str){/*return utf8_encode($str);*/return mb_convert_encoding($str,'UTF-8','ISO-8859-1');}, array_flip(
             array_diff(
                 get_html_translation_table(HTML_ENTITIES), 
                 get_html_translation_table(HTML_SPECIALCHARS)
