@@ -1,16 +1,11 @@
 language: php
 php:
-  - "7.2"
-  - "7.1"
-  - "7.0"
-  
-before_install:
- - curl -sS https://getcomposer.org/installer | php
-
-before_script:
- - php composer.phar install --dev
- - php composer.phar dump
+  - 7.0
+  - 7.1
+  - 7.2
+  - 7.3
+  - 7.4
 
 script:
- - (phpunit)
+ - php vendor/bin/phpunit
  
