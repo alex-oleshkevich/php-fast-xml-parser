@@ -10,6 +10,12 @@ Key features:
   
 [![Build Status](https://travis-ci.org/alex-oleshkevich/php-fast-xml-parser.svg)](https://travis-ci.org/alex-oleshkevich/php-fast-xml-parser)
 
+## Installation
+
+```
+composer require alex.oleshkevich/fast-xml-parser
+```
+
 Example & Tutorial
 --------------
 
